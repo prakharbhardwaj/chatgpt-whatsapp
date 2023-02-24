@@ -37,7 +37,7 @@ const processMessageWithChatGPT = async (message) => {
     model: "text-davinci-003",
     prompt: message,
     temperature: 0.7, //A number between 0 and 1 that determines how many creative risks the engine takes when generating text.
-    max_tokens: 3000, // Maximum completion length. max: 4000-prompt
+    max_tokens: 1000, // Maximum completion length. max: 4000-prompt
     frequency_penalty: 0.7 // # between 0 and 1. The higher this value, the bigger the effort the model will make in not repeating itself.
   });
   return response.data.choices[0].text;
