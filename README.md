@@ -1,5 +1,6 @@
 # ChatGPT + WhatsApp + Twilio = 🚀
 
+![Test Cases](https://github.com/prakharbhardwaj/chatgpt-whatsapp/actions/workflows/test.yml/badge.svg)
 ![Prettier](https://github.com/prakharbhardwaj/chatgpt-whatsapp/actions/workflows/prettier.yml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
