@@ -31,14 +31,16 @@ module.exports = async (req, res) => {
   }
 };
 
-// Returns a response from OpenAI's GPT-3 API
+/* Returns a response from OpenAI's GPT-3.5 API
+ * https://platform.openai.com/docs/api-reference/chat/create?lang=node.js */
 const processMessageWithChatGPT = async (message) => {
-  const response = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt: message,
-    temperature: 0.7, //A number between 0 and 1 that determines how many creative risks the engine takes when generating text.
-    max_tokens: 1000, // Maximum completion length. max: 4000-prompt
-    frequency_penalty: 0.7 // # between 0 and 1. The higher this value, the bigger the effort the model will make in not repeating itself.
+  const response = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [{ role: "user", content: message }],
+    temperature: 0.7, //A number between 0 and 2 that determines how many creative risks the engine takes when generating text.
+    max_tokens: 4096, // Maximum completion length. max: 4096-prompt
+    frequency_penalty: 0.7 // # between -2.0 and 2.0. The higher this value, the bigger the effort the model will make in not repeating itself.
   });
-  return response.data.choices[0].text;
+
+  return response.data.choices[0].message.content;
 };
