@@ -38,7 +38,7 @@ const processMessageWithChatGPT = async (message) => {
     model: "gpt-3.5-turbo",
     messages: [{ role: "user", content: message }],
     temperature: 0.7, //A number between 0 and 2 that determines how many creative risks the engine takes when generating text.
-    max_tokens: 4096, // Maximum completion length. max: 4096-prompt
+    max_tokens: 1000, // Maximum completion length. max: 4096-prompt
     frequency_penalty: 0.7 // # between -2.0 and 2.0. The higher this value, the bigger the effort the model will make in not repeating itself.
   });
 
