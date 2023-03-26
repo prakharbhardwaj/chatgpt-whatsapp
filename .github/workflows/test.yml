@@ -22,6 +22,10 @@ jobs:
         with:
           node-version: "18.x"
 
+      # Install FFmpeg
+      - name: Install FFmpeg
+        run: sudo apt-get -y install ffmpeg
+
       # Install dependencies
       - name: Install dependencies
         run: npm install
