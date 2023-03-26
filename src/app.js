@@ -1,12 +1,15 @@
 const express = require("express");
-const chatgpt = require("../src/chatgpt");
+const message = require("./message.js");
 
 const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => res.send("Hello there"));
+app.get("/", (req, res) => {
+  res.send("Hello there");
+});
 
-app.post("/chatgpt", chatgpt);
+app.post("/message", message);
 
 module.exports = app;

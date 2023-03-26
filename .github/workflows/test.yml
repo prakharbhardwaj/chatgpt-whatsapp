@@ -2,7 +2,7 @@ name: Jest Test
 
 on:
   push:
-    branches: [main]
+    branches: [main, medium-blog]
   pull_request:
     branches: [main]
 

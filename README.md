@@ -12,8 +12,8 @@ This WhatsApp bot uses OpenAI's GPT and Twilio Messaging API to respond to user 
 
 ## Requirements
 
--   Node.js (v17 or more)
--   OpenAI & Twilio Accounts
+- Node.js (v18 or more)
+- OpenAI & Twilio Accounts
 
 ## Installation
 
@@ -28,6 +28,7 @@ This WhatsApp bot uses OpenAI's GPT and Twilio Messaging API to respond to user 
 For a detailed tutorial on how to build chatbot with ChatGPT and Twilio, please refer to our Medium blog post [here](https://blog.gogroup.co/building-a-whatsapp-chatbot-that-understands-integrating-chatgpt-and-twilio-f630bc8b9d84).
 
 ## Contributing
+
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
