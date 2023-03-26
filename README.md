@@ -19,7 +19,7 @@ This WhatsApp bot uses OpenAI's GPT and Twilio Messaging API to respond to user 
 
 1. Clone this repository
 2. Install the required packages by running `npm install`
-3. Add your OpenAI API key, Twilo's Account SID and Auth Token into the `.env` file. Example file: [.env.example](https://github.com/prakharbhardwaj/chatgpt-whatsapp/blob/main/.env.example)
+3. Add your OpenAI API key, Twilo's Account SID, Auth Token, GPT Model and Max Tokens into the `.env` file. Example file: [.env.example](https://github.com/prakharbhardwaj/chatgpt-whatsapp/blob/main/.env.example)
 4. Run the bot using `npm start`
 5. Start the ngrok using `~/ngrok http 3000`
 
