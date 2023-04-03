@@ -2,6 +2,7 @@ const openai = require("./openai.js");
 const { Readable } = require("stream");
 const { spawn } = require("child_process");
 const fetch = require("node-fetch");
+const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
 
 /**
  * Transcribes audio data from a Readable Node stream using OpenAI.
@@ -11,7 +12,7 @@ const fetch = require("node-fetch");
  */
 const transcribeAudio = async (input) => {
   // use ffmpeg to convert the input audio from Ogg to MP3 format
-  const proc = spawn("ffmpeg", ["-f", "ogg", "-i", "-", "-f", "mp3", "-"]);
+  const proc = spawn(ffmpegPath, ["-f", "ogg", "-i", "-", "-f", "mp3", "-"]);
   input.pipe(proc.stdin);
   // set the output path to "upload.mp3" for debugging purposes
   proc.stdout.path = "upload.mp3";

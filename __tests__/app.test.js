@@ -3,6 +3,7 @@ const app = require("../src/app");
 const message = require("../src/message");
 
 jest.mock("../src/message");
+jest.mock("../config/config.js", () => require("../__mocks__/config.mock.js"));
 
 describe("Test POST /message endpoint", () => {
   it("should call the message middleware", async () => {

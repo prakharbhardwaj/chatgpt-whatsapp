@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
       return res.status(200).send(twiml.toString());
     }
 
-    // Process message with OpenAI's GPT-3.5 API and return response
+    // Process message with OpenAI's GPT API and return response
     const response = await chatCompletion(message);
     twiml.message(response);
 

@@ -8,7 +8,7 @@
 
 ## Introduction
 
-This WhatsApp bot uses OpenAI's GPT and Twilio Messaging API to respond to user inputs. The tutorial walks you through the process of integrating ChatGPT and Twilio to build chatbot that can offer personalized and engaging experiences for users.
+This WhatsApp bot uses OpenAI's GPT and Twilio Messaging API to respond to user inputs. The tutorial walks you through the process of integrating OpenAI API and Twilio to build chatbot that can offer personalized and engaging experiences for users.
 
 ## Requirements
 

@@ -5,6 +5,7 @@ const transcribeAudio = require("../src/transcript");
 // mock the fetch function to return a dummy response
 jest.mock("node-fetch", () => jest.fn());
 jest.mock("../src/openai.js");
+jest.mock("../config/config.js", () => require("../__mocks__/config.mock.js"));
 
 const mockFetch = (data) => {
   return Promise.resolve({

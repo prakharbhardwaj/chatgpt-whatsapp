@@ -1,7 +1,3 @@
-const dotenv = require("dotenv");
+const { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, OPENAI_API_KEY, GPT_MODEL, MAX_TOKENS, REGION, APP_PORT } = require("dotenv")?.config()?.parsed;
 
-dotenv.config();
-
-const { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, OPENAI_API_KEY, GPT_MODEL, MAX_TOKENS } = process.env;
-
-module.exports = { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, OPENAI_API_KEY, GPT_MODEL, MAX_TOKENS };
+module.exports = { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, OPENAI_API_KEY, GPT_MODEL, MAX_TOKENS, REGION, APP_PORT };

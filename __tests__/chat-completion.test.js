@@ -3,25 +3,33 @@ const config = require("../config/config.js");
 const chatCompletion = require("../src/chat-completion.js");
 
 jest.mock("../src/openai.js");
+jest.mock("../config/config.js", () => require("../__mocks__/config.mock.js"));
 
 describe("chatCompletion", () => {
-  const message = "test message";
+  const message = "Hello, AI!";
 
-  it("should resolve with the chat completion", async () => {
-    const response = { data: { choices: [{ message: { content: "test response" } }] } };
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-    openai.createChatCompletion.mockResolvedValue(response);
+  it("should return message content from GPT API", async () => {
+    const expectedContent = "Hi there!";
+
+    openai.createChatCompletion = jest.fn().mockResolvedValue({
+      data: { choices: [{ message: { content: expectedContent } }] }
+    });
 
     const result = await chatCompletion(message);
 
+    expect(openai.createChatCompletion).toHaveBeenCalledTimes(1);
     expect(openai.createChatCompletion).toHaveBeenCalledWith({
-      model: config?.GPT_MODEL || "gpt-3.5-turbo",
+      model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: message }],
       temperature: 0.7,
-      max_tokens: Number(config?.MAX_TOKENS) || 1000,
+      max_tokens: 1000,
       frequency_penalty: 0.7
     });
-    expect(result).toEqual("test response");
+    expect(result).toEqual(expectedContent);
   });
 
   it("should reject with an error if chat completion fails", async () => {
