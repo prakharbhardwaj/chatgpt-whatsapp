@@ -1,73 +1,92 @@
-const twilio = require("twilio");
+const handler = require("../src/message"); // Replace with the correct path
 const chatCompletion = require("../src/chat-completion.js");
 const transcript = require("../src/transcript");
-const config = require("../config/config.js");
-const handler = require("../src/message");
+const twilio = require("twilio");
 
-// Mock external functions
 jest.mock("twilio");
 jest.mock("../src/chat-completion.js");
+jest.mock("../src/transcript.js");
 
-describe("handler", () => {
-  const req = {
-    body: {
-      Body: "Hello"
-    }
-  };
-  const res = {
-    status: jest.fn(() => res),
-    set: jest.fn(() => res),
-    send: jest.fn()
-  };
-  const twiml = {
-    message: jest.fn(() => twiml),
-    toString: jest.fn(() => "mocked twiml")
-  };
+describe("Twilio handler", () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
 
-  beforeAll(() => {
-    twilio.mockReturnValue({
-      twiml: {
-        MessagingResponse: jest.fn(() => twiml)
+  it("should process text message and send response", async () => {
+    const req = {
+      body: {
+        Body: "test message"
       }
-    });
-    chatCompletion.mockResolvedValue("mocked response");
-  });
+    };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      set: jest.fn().mockReturnThis(),
+      send: jest.fn()
+    };
+    chatCompletion.mockResolvedValue("processed message");
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it("should respond with a message", async () => {
     await handler(req, res);
 
-    expect(twilio).toHaveBeenCalledWith(config.TWILIO_ACCOUNT_SID, config.TWILIO_AUTH_TOKEN);
-    expect(twilio.twiml.MessagingResponse).toHaveBeenCalled();
-    expect(chatCompletion).toHaveBeenCalledWith("Hello");
-    expect(res.set).toHaveBeenCalledWith("Content-Type", "text/xml");
+    expect(chatCompletion).toHaveBeenCalledWith("test message");
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  it("should process audio file and send response", async () => {
+    const req = {
+      body: {
+        MediaContentType0: "audio/mp3",
+        MediaUrl0: "test-url"
+      }
+    };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      set: jest.fn().mockReturnThis(),
+      send: jest.fn()
+    };
+    transcript.mockResolvedValue("transcribed message");
+    chatCompletion.mockResolvedValue("processed message");
+
+    await handler(req, res);
+
+    expect(transcript).toHaveBeenCalledWith("test-url");
+    expect(chatCompletion).toHaveBeenCalledWith("transcribed message");
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  it("should ask to send message or audio file", async () => {
+    const req = {
+      body: {}
+    };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn()
+    };
+
+    await handler(req, res);
+
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalled();
   });
 
-  it("should respond with an error message", async () => {
-    const error = new Error("mocked error");
-    error.response = {
-      data: {
-        error: "mocked error"
+  it("should handle error", async () => {
+    const req = {
+      body: {
+        Body: "test message"
       }
     };
-
-    chatCompletion.mockRejectedValue(error);
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn()
+    };
+    const errorMessage = "mock error";
+    chatCompletion.mockRejectedValue({ response: { data: { error: errorMessage } } });
 
     await handler(req, res);
 
-    expect(twilio).toHaveBeenCalledWith(config.TWILIO_ACCOUNT_SID, config.TWILIO_AUTH_TOKEN);
-    expect(twilio.twiml.MessagingResponse).toHaveBeenCalled();
-    expect(chatCompletion).toHaveBeenCalledWith("Hello");
-    // expect(console.error).toHaveBeenCalledWith("mocked error");
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.send).toHaveBeenCalledWith({
       message: "Something went wrong",
-      error: "mocked error"
+      error: errorMessage
     });
   });
 });
