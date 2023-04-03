@@ -6,6 +6,7 @@ const twilio = require("twilio");
 jest.mock("twilio");
 jest.mock("../src/chat-completion.js");
 jest.mock("../src/transcript.js");
+jest.mock("../config/config.js", () => require("../__mocks__/config.mock.js"));
 
 describe("Twilio handler", () => {
   afterEach(() => {

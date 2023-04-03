@@ -1,10 +1,8 @@
 const openai = require("../src/openai");
 const { Configuration, OpenAIApi } = require("openai");
 
-jest.mock("openai", () => ({
-  Configuration: jest.fn(),
-  OpenAIApi: jest.fn()
-}));
+jest.mock("openai", () => ({ Configuration: jest.fn(), OpenAIApi: jest.fn() }));
+jest.mock("../config/config.js", () => require("../__mocks__/config.mock.js"));
 
 describe("OpenAI API tests", () => {
   it("creates a new Configuration object", () => {

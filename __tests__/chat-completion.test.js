@@ -3,7 +3,7 @@ const config = require("../config/config.js");
 const chatCompletion = require("../src/chat-completion.js");
 
 jest.mock("../src/openai.js");
-jest.mock("../config/config.js");
+jest.mock("../config/config.js", () => require("../__mocks__/config.mock.js"));
 
 describe("chatCompletion", () => {
   const message = "Hello, AI!";
