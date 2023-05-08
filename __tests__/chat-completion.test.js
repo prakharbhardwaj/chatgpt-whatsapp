@@ -19,13 +19,24 @@ describe("chatCompletion", () => {
       data: { choices: [{ message: { content: expectedContent } }] }
     });
 
+    // mock config
+    config.GPT_MODEL = "gpt-3.5-turbo";
+    config.MAX_TOKENS = 1000;
+
     const result = await chatCompletion(message);
 
     expect(openai.createChatCompletion).toHaveBeenCalledTimes(1);
     expect(openai.createChatCompletion).toHaveBeenCalledWith({
       model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: message }],
-      temperature: 0.7,
+      messages: [
+        {
+          role: "assistant",
+          content:
+            "You are ChatGPT, a large language model trained by OpenAI. You answer as concisely as possible for each responseIf you are generating a list, do not have too many items."
+        },
+        { role: "user", content: message }
+      ],
+      temperature: 0.5,
       max_tokens: 1000,
       frequency_penalty: 0.7
     });
